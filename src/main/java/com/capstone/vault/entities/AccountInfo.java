@@ -1,10 +1,11 @@
 package com.capstone.vault.entities;
 
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+
 
 import java.math.BigDecimal;
 import java.util.List;

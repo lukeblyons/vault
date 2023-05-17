@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "user_info")
 @Data
@@ -30,4 +32,7 @@ public class UserInfo {
 
     @Column(nullable = false)
     private String password;
+
+    @OneToMany(mappedBy = "userInfo", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    private List<AccountInfo> accountInfoList;
 }

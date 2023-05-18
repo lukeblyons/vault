@@ -36,4 +36,7 @@ public class AccountInfo {
 
     @OneToMany(mappedBy = "receiverAccount", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<TransactionDetails> receivedTransactions;
+
+    @OneToMany(mappedBy = "receiverAccount", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<TransactionDetails> pendingTransactions;
 }

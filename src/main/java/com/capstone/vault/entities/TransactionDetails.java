@@ -42,6 +42,9 @@ public class TransactionDetails {
     @Column(nullable = false)
     private String status;
 
+    @Column(name = "approval_status", nullable = false)
+    private boolean approvalStatus;
+
     @Column(name = " approval_user_id", nullable = false)
     private Long approvalUserId;
 }

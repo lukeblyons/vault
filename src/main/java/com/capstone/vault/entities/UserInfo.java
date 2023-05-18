@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -33,6 +35,13 @@ public class UserInfo {
     @Column(nullable = false)
     private String password;
 
+    @Transient
+    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
     @OneToMany(mappedBy = "userInfo", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     private List<AccountInfo> accountInfoList;
+
+    public void setPassword(String password) {
+        this.password = passwordEncoder.encode(password);
+    }
 }

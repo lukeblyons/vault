@@ -11,4 +11,5 @@ public interface AccountInfoRepository extends JpaRepository<AccountInfo, Long> 
     // Lets us display an account or multiple accounts and display respective info
     List<AccountInfo> findByUserInfoId(Long userId);
     List<AccountInfo> findByIdIn(Long... accountIds);
+    AccountInfo findByAccountNumber(String accountNumber);
 }

@@ -18,4 +18,5 @@ public class AccountInfoDTO {
     private UserInfoDTO userInfo;
     private List<TransactionDetailsDTO> sentTransactions;
     private List<TransactionDetailsDTO> receivedTransactions;
+    private List<TransactionDetailsDTO> pendingTransactions;
 }

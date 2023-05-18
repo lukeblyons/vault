@@ -9,6 +9,6 @@ import java.util.List;
 
 @Repository
 public interface TransactionDetailsRepository extends JpaRepository<TransactionDetails, Long> {
-    // Retrieves all transactions for a specific account, ordered by datetime in descending order
-    List<TransactionDetails> findByReceiverAccountOrSenderAccountOrderByDateTimeDesc(AccountInfo receiverAccount, AccountInfo senderAccount);
+    List<TransactionDetails> findByReceiverAccountOrderByDateTimeDesc(AccountInfo receiverAccount);
+    List<TransactionDetails> findByReceiverAccountUserInfoIdOrSenderAccountUserInfoIdOrderByDateTimeDesc(Long userId, Long userId1);
 }

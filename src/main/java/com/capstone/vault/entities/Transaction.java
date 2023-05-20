@@ -1,20 +1,22 @@
 package com.capstone.vault.entities;
 
+import com.capstone.vault.dtos.TransactionDTO;
+
 import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "transaction_details")
+@Table(name = "Transactions")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TransactionDetails {
+public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,28 +25,25 @@ public class TransactionDetails {
     private String transactionType;
 
     @Column(nullable = false)
-    private BigDecimal amount;
+    private BigDecimal transactionAmount;
 
     @Column
-    private String description;
+    private String transactionDescription;
 
     @Column(name = "date_time", nullable = false)
     private LocalDateTime dateTime;
 
     @ManyToOne
-    @JoinColumn(name = "sender_account_id", nullable = false)
-    private AccountInfo senderAccount;
+    @JsonBackReference
+    private Account account;
 
-    @ManyToOne
-    @JoinColumn(name = "receiver_account_id", nullable = false)
-    private AccountInfo receiverAccount;
 
-    @Column(nullable = false)
-    private String status;
 
-    @Column(name = "approval_status", nullable = false)
-    private boolean approvalStatus;
+    public Transaction(TransactionDTO transactionDTO) {
+        if (transactionDTO.getId() != null) {
+            this.id = transactionDTO.getId();
+        }
+    }
 
-    @Column(name = " approval_user_id", nullable = false)
-    private Long approvalUserId;
+
 }

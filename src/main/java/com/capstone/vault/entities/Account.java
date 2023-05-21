@@ -45,6 +45,12 @@ public class Account {
         if (accountDTO.getAccountNumber() != null) {
             this.accountNumber = accountDTO.getAccountNumber();
         }
+        if (accountDTO.getAccountBalance() != null) {
+            this.accountBalance = accountDTO.getAccountBalance();
+        }
+        if (accountDTO.getNickname() != null) {
+            this.nickname = accountDTO.getNickname();
+        }
     }
 
 

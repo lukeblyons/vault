@@ -25,5 +25,18 @@ public class TransactionDTO {
         if (transaction.getId() != null) {
             this.id = transaction.getId();
         }
+        if (transaction.getTransactionType() != null) {
+            this.transactionType = transaction.getTransactionType();
+        }
+        if (transaction.getAmount() != null) {
+            this.amount = transaction.getAmount();
+        }
+        if (transaction.getDescription() != null) {
+            this.description = transaction.getDescription();
+        }
+        if (transaction.getDateTime() != null) {
+            this.dateTime = transaction.getDateTime();
+        }
     }
+
 }

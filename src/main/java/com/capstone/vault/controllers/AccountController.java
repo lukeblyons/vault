@@ -21,7 +21,7 @@ public class AccountController {
         return accountService.getAllAccountsByUserId(userId);
     }
 
-    @GetMapping("/{accountId}")
+    @GetMapping("/{accountNumber}")
     public Optional<AccountDTO> getAccountById(@PathVariable Long accountId){
         return accountService.getAccountById(accountId);
     }

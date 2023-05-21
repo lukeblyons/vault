@@ -28,7 +28,12 @@ public class AccountDTO implements Serializable {
         if (account.getAccountNumber() != null) {
             this.accountNumber = account.getAccountNumber();
         }
+        if (account.getAccountBalance() != null) {
+            this.accountBalance = account.getAccountBalance();
+        }
+        if (account.getNickname() != null) {
+            this.nickname = account.getNickname();
+        }
     }
-
 
 }

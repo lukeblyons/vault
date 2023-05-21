@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.time.LocalDateTime;
 
 @Service
 public class TransactionServiceImpl implements TransactionService {
@@ -35,9 +36,20 @@ public class TransactionServiceImpl implements TransactionService {
     @Transactional
     public void addTransaction(TransactionDTO transactionDTO, Long accountId) {
         Optional<Account> accountOptional = accountRepository.findById(accountId);
-        Transaction transaction= new Transaction(transactionDTO);
-        accountOptional.ifPresent(transaction::setAccount);
-        transactionRepository.saveAndFlush(transaction);
+        if(accountOptional.isPresent()){
+            Account account = accountOptional.get();
+            Transaction transaction= new Transaction(transactionDTO);
+            transaction.setAccount(account);
+            transaction.setDateTime(LocalDateTime.now());
+
+            if ("Deposit".equalsIgnoreCase(transactionDTO.getTransactionType())) {
+                account.setAccountBalance(account.getAccountBalance().add(transactionDTO.getAmount()));
+            } else if ("Withdraw".equalsIgnoreCase(transactionDTO.getTransactionType())) {
+                account.setAccountBalance(account.getAccountBalance().subtract(transactionDTO.getAmount()));
+            }
+            transactionRepository.saveAndFlush(transaction);
+            accountRepository.saveAndFlush(account); // You might need to save account separately if not using cascading
+        }
     }
 
 

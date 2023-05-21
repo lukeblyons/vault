@@ -25,10 +25,10 @@ public class Transaction {
     private String transactionType;
 
     @Column(nullable = false)
-    private BigDecimal transactionAmount;
+    private BigDecimal amount;
 
     @Column
-    private String transactionDescription;
+    private String description;
 
     @Column(name = "date_time", nullable = false)
     private LocalDateTime dateTime;
@@ -40,9 +40,19 @@ public class Transaction {
 
 
     public Transaction(TransactionDTO transactionDTO) {
-        if (transactionDTO.getId() != null) {
-            this.id = transactionDTO.getId();
+        if (transactionDTO.getTransactionType() != null) {
+            this.transactionType = transactionDTO.getTransactionType();
         }
+        if (transactionDTO.getAmount() != null) {
+            this.amount = transactionDTO.getAmount();
+        }
+        if (transactionDTO.getDescription() != null) {
+            this.description = transactionDTO.getDescription();
+        }
+        if (transactionDTO.getDateTime() != null) {
+            this.dateTime = transactionDTO.getDateTime();
+        }
+
     }
 
 

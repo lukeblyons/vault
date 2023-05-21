@@ -18,6 +18,7 @@ public class TransactionDTO {
     private BigDecimal amount;
     private String description;
     private LocalDateTime dateTime;
+    private String recipientAccount;
 
 
 
@@ -37,6 +38,7 @@ public class TransactionDTO {
         if (transaction.getDateTime() != null) {
             this.dateTime = transaction.getDateTime();
         }
+
     }
 
 }

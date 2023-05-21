@@ -18,4 +18,7 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     Set<String> findAllAccountNumbers();
 
     int countByUser(User user);
+
+    // For "Transfer" transactions
+    Account findByNickname(String nickname);
 }

@@ -37,6 +37,9 @@ public class Transaction {
     @JsonBackReference
     private Account account;
 
+    @ManyToOne
+    @JsonBackReference
+    private Account recipientAccount;
 
 
     public Transaction(TransactionDTO transactionDTO) {

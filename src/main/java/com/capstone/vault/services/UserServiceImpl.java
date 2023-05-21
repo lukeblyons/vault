@@ -1,8 +1,10 @@
 package com.capstone.vault.services;
 
+import com.capstone.vault.dtos.AccountDTO;
 import com.capstone.vault.dtos.UserDTO;
 import com.capstone.vault.entities.User;
 import com.capstone.vault.repositories.UserRepository;
+import com.capstone.vault.services.AccountService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,6 +22,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
+    private AccountService accountService;
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Override
@@ -28,6 +32,12 @@ public class UserServiceImpl implements UserService {
         List<String> response = new ArrayList<>();
         User user = new User(userDTO);
         userRepository.saveAndFlush(user);
+
+        // Automatically creates "Checking" account after a user registers
+        accountService.addAccount(new AccountDTO(), user.getId());
+        // Automatically creates "Savings" account after a user registers
+        accountService.addAccount(new AccountDTO(), user.getId());
+
         response.add("http://localhost:8080/login.html");
         return response;
     }

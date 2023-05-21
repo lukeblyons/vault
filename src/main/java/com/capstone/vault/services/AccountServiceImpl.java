@@ -10,9 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
+
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
-
 
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -36,9 +37,22 @@ public class AccountServiceImpl implements AccountService {
     @Transactional
     public void addAccount(AccountDTO accountDTO, Long userId) {
         Optional<User> userOptional = userRepository.findById(userId);
-        Account account = new Account(accountDTO);
-        userOptional.ifPresent(account::setUser);
-        accountRepository.saveAndFlush(account);
+        if (userOptional.isPresent()) {
+            Account account = new Account(accountDTO);
+            account.setUser(userOptional.get());
+            account.setAccountNumber(generateAccountNumber()); // Generate the account number
+            account.setAccountBalance(BigDecimal.ZERO); // Account balance starts at 0.00
+
+            // Automatically creates "Checking" and "Savings" accounts upon user registration
+            int accountCount = accountRepository.countByUser(userOptional.get());
+            if (accountCount == 0) {
+                account.setNickname("Checking"); // User's first account's nickname is "Checking"
+            } else if (accountCount == 1) {
+                account.setNickname("Savings"); // User's second account's nickname is "Savings"
+            }
+
+            accountRepository.saveAndFlush(account);
+        }
     }
 
     @Override
@@ -57,4 +71,21 @@ public class AccountServiceImpl implements AccountService {
         return Optional.empty();
     }
 
+    // Automatically generates account number
+    private String generateAccountNumber() {
+        String prefix = "125-";
+        String uniqueNumbers = generateUniqueNumbers();
+        return prefix + uniqueNumbers;
+    }
+
+    // Helper method to generate 6 unique random numbers
+    private String generateUniqueNumbers() {
+        String uniqueNumbers = "";
+        Random random = new Random();
+        Set<String> existingAccountNumbers = accountRepository.findAllAccountNumbers();
+        while (uniqueNumbers.isEmpty() || existingAccountNumbers.contains(uniqueNumbers)) {
+            uniqueNumbers = String.format("%06d", random.nextInt(1000000));
+        }
+        return uniqueNumbers;
+    }
 }

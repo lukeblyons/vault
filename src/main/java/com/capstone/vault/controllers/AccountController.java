@@ -10,18 +10,18 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/accounts")
+@RequestMapping("/accounts")
 public class AccountController {
 
     @Autowired
     private AccountService accountService;
 
     @GetMapping("/user/{userId}")
-    public List<AccountDTO> getAccountsByUser(@PathVariable Long userId){
+    public List<AccountDTO> getAccountsByUserId(@PathVariable Long userId){
         return accountService.getAllAccountsByUserId(userId);
     }
 
-    @GetMapping("/{accountNumber}")
+    @GetMapping("/{accountId}")
     public Optional<AccountDTO> getAccountById(@PathVariable Long accountId){
         return accountService.getAccountById(accountId);
     }

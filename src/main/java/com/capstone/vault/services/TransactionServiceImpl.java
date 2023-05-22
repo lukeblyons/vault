@@ -44,22 +44,28 @@ public class TransactionServiceImpl implements TransactionService {
             transaction.setAccount(account);
             transaction.setDateTime(LocalDateTime.now());
 
+            BigDecimal transactionAmount = transactionDTO.getAmount();
+            BigDecimal accountBalance = account.getAccountBalance();
+
             if ("Deposit".equalsIgnoreCase(transactionDTO.getTransactionType())) {
-                account.setAccountBalance(account.getAccountBalance().add(transactionDTO.getAmount()));
+                account.setAccountBalance(accountBalance.add(transactionAmount));
                 transaction.setRecipientAccount(account);
-
             } else if ("Withdraw".equalsIgnoreCase(transactionDTO.getTransactionType())) {
-                account.setAccountBalance(account.getAccountBalance().subtract(transactionDTO.getAmount()));
-
+                if (transactionAmount.compareTo(accountBalance) > 0) {
+                    throw new IllegalArgumentException("Insufficient account balance");
+                }
+                account.setAccountBalance(accountBalance.subtract(transactionAmount));
             } else if ("Transfer".equalsIgnoreCase(transactionDTO.getTransactionType())) {
                 Account recipientAccount = accountRepository.findByAccountNumber(transactionDTO.getRecipientAccountNumber());
                 if (recipientAccount != null) {
-                    account.setAccountBalance(account.getAccountBalance().subtract(transactionDTO.getAmount()));
-                    recipientAccount.setAccountBalance(recipientAccount.getAccountBalance().add(transactionDTO.getAmount()));
+                    if (transactionAmount.compareTo(accountBalance) > 0) {
+                        throw new IllegalArgumentException("Insufficient account balance");
+                    }
+                    account.setAccountBalance(accountBalance.subtract(transactionAmount));
+                    recipientAccount.setAccountBalance(recipientAccount.getAccountBalance().add(transactionAmount));
                     transaction.setRecipientAccount(recipientAccount);
                 } else {
                     throw new IllegalArgumentException("Recipient account not found");
-
                 }
             }
 

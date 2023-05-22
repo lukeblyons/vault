@@ -17,6 +17,7 @@ public class AccountDTO implements Serializable {
     private String nickname;
     private String accountNumber;
     private BigDecimal accountBalance;
+    private String card;
     private UserDTO userInfo;
 
 
@@ -33,6 +34,9 @@ public class AccountDTO implements Serializable {
         }
         if (account.getNickname() != null) {
             this.nickname = account.getNickname();
+        }
+        if (account.getCard() != null) {
+            this.card = account.getCard();
         }
     }
 

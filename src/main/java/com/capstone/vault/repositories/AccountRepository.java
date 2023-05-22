@@ -19,6 +19,9 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 
     int countByUser(User user);
 
+    @Query("SELECT a.card FROM Account a")
+    Set<String> findAllCardNumbers();
+
     // For "Transfer" transactions
     Account findByAccountNumber(String accountNumber);
 }

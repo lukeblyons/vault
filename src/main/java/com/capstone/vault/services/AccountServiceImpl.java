@@ -40,7 +40,7 @@ public class AccountServiceImpl implements AccountService {
         if (userOptional.isPresent()) {
             Account account = new Account(accountDTO);
             account.setUser(userOptional.get());
-            account.setAccountNumber(generateAccountNumber()); // Generate the account number
+            account.setAccountNumber(generateAccountNumber()); // Generates the account number
             account.setAccountBalance(BigDecimal.ZERO); // Account balance starts at 0.00
 
             // Automatically creates "Checking" and "Savings" accounts upon user registration
@@ -49,6 +49,13 @@ public class AccountServiceImpl implements AccountService {
                 account.setNickname("Checking"); // User's first account's nickname is "Checking"
             } else if (accountCount == 1) {
                 account.setNickname("Savings"); // User's second account's nickname is "Savings"
+            }
+
+            // Automatically creates card numbers if it is a "Checking" or "Credit account"
+            if ("Checking".equals(account.getNickname()) || "Credit".equals(account.getNickname())) {
+                account.setCard(generateCardNumber());
+            } else {
+                account.setCard("No Registered Cards");
             }
 
             accountRepository.saveAndFlush(account);
@@ -77,7 +84,6 @@ public class AccountServiceImpl implements AccountService {
         String uniqueNumbers = generateUniqueNumbers();
         return prefix + uniqueNumbers;
     }
-
     // Helper method to generate 6 unique random numbers
     private String generateUniqueNumbers() {
         String uniqueNumbers = "";
@@ -87,5 +93,34 @@ public class AccountServiceImpl implements AccountService {
             uniqueNumbers = String.format("%06d", random.nextInt(1000000));
         }
         return uniqueNumbers;
+    }
+
+    // Automatically generates card number
+    private String generateCardNumber() {
+        String prefix = generateRandomNumbers(15); // Generate 15 random numbers
+        return formatCardNumber(prefix + "1"); // Append "1" as the last digit and format the card number
+    }
+
+    private String formatCardNumber(String cardNumber) {
+        StringBuilder formattedNumber = new StringBuilder();
+        for (int i = 0; i < cardNumber.length(); i++) {
+            if (i > 0 && i % 4 == 0) {
+                formattedNumber.append(" "); // Adds a space after every 4 digits
+            }
+            formattedNumber.append(cardNumber.charAt(i));
+        }
+        return formattedNumber.toString();
+    }
+
+    private String generateRandomNumbers(int length) {
+        Random random = new Random();
+        Set<String> existingCardNumbers = accountRepository.findAllCardNumbers();
+        String numbers;
+        do {
+            numbers = random.ints(length, 0, 10)
+                    .mapToObj(String::valueOf)
+                    .collect(Collectors.joining());
+        } while (existingCardNumbers.contains(numbers));
+        return numbers;
     }
 }

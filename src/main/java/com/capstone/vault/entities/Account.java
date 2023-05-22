@@ -32,6 +32,9 @@ public class Account {
     @Column(name = "account_balance", nullable = false)
     private BigDecimal accountBalance;
 
+    @Column(name = "card")
+    private String card;
+
     @ManyToOne
     @JsonBackReference
     private User user;
@@ -50,6 +53,9 @@ public class Account {
         }
         if (accountDTO.getNickname() != null) {
             this.nickname = accountDTO.getNickname();
+        }
+        if (accountDTO.getCard() != null) {
+            this.card = accountDTO.getCard();
         }
     }
 

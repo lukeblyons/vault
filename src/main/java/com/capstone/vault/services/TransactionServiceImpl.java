@@ -52,10 +52,15 @@ public class TransactionServiceImpl implements TransactionService {
                 account.setAccountBalance(account.getAccountBalance().subtract(transactionDTO.getAmount()));
 
             } else if ("Transfer".equalsIgnoreCase(transactionDTO.getTransactionType())) {
-                Account recipientAccount = accountRepository.findByNickname(transactionDTO.getRecipientAccount());
-                account.setAccountBalance(account.getAccountBalance().subtract(transactionDTO.getAmount()));
-                recipientAccount.setAccountBalance(recipientAccount.getAccountBalance().add(transactionDTO.getAmount()));
-                transaction.setRecipientAccount(recipientAccount);
+                Account recipientAccount = accountRepository.findByAccountNumber(transactionDTO.getRecipientAccountNumber());
+                if (recipientAccount != null) {
+                    account.setAccountBalance(account.getAccountBalance().subtract(transactionDTO.getAmount()));
+                    recipientAccount.setAccountBalance(recipientAccount.getAccountBalance().add(transactionDTO.getAmount()));
+                    transaction.setRecipientAccount(recipientAccount);
+                } else {
+                    throw new IllegalArgumentException("Recipient account not found");
+
+                }
             }
 
             transactionRepository.saveAndFlush(transaction);

@@ -1,18 +1,18 @@
 // #1 - Login  form //
-const loginForm = document.getElementById('login-form')
+let loginForm = document.getElementById('login-form');
 
-const loginUsername = document.getElementById('login-username');
-const loginPassword = document.getElementById('login-password');
+let loginUsername = document.getElementById('login-username');
+let loginPassword = document.getElementById('login-password');
 
 
 // #2 - Register form //
-const registerForm = document.getElementById('register-form')
+const registerForm = document.getElementById('register-form');
 
 const firstName = document.getElementById('register-first-name');
 const lastName = document.getElementById('register-last-name');
 const email = document.getElementById('register-email');
 const username = document.getElementById('register-username');
-const password = document.getElementById('register-password')
+const password = document.getElementById('register-password');
 
 
 // #3 - For Modal toggling //
@@ -29,46 +29,54 @@ const switchToLoginButton = document.getElementById('switch-to-login-button');
 
 
 
-// #1 User Login //
-
-
-
-
-
-
-// #2 - Register user //
+// #1 and #2 - User Login OR User Registration//
 const headers = {
-    'Content-Type':'application/json'
+  'Content-Type': 'application/json'
 };
 
 const baseUrl = 'http://localhost:8080/users';
 
 const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    let bodyObj = {
-        firstName: firstName.value,
-        lastName: lastName.value,
-        email: email.value,
-        username: username.value,
-        password: password.value
+  let bodyObj = {};
+
+  if (e.target === loginForm) {
+    bodyObj = {
+      username: loginUsername.value,
+      password: loginPassword.value
     };
+  } else if (e.target === registerForm) {
+    bodyObj = {
+      firstName: firstName.value,
+      lastName: lastName.value,
+      email: email.value,
+      username: username.value,
+      password: password.value
+    };
+  }
 
-    const response = await fetch(`${baseUrl}/register`, {
-        method: "POST",
-        body: JSON.stringify(bodyObj),
-        headers: headers
-    })
-    .catch(err => console.error(err.message));
+  try {
+    const endpoint = e.target === loginForm ? 'login' : 'register';
+    const response = await fetch(`${baseUrl}/${endpoint}`, {
+      method: 'POST',
+      body: JSON.stringify(bodyObj),
+      headers: headers
+    });
 
     const responseArr = await response.json();
 
     if (response.status === 200) {
-        window.location.replace(responseArr[0]);
+      document.cookie = `userId=${responseArr[1]}`;
+      window.location.replace(responseArr[0]);
     }
+  } catch (err) {
+    console.error(err.message);
+  }
 };
 
-registerForm.addEventListener("submit", handleSubmit);
+loginForm.addEventListener('submit', handleSubmit);
+registerForm.addEventListener('submit', handleSubmit);
 
 
 

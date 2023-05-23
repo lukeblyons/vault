@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
         // Automatically creates "Savings" account after a user registers
         accountService.addAccount(new AccountDTO(), user.getId());
 
-        response.add("http://localhost:8080/login.html");
+        response.add("http://localhost:8080/landing.html");
         return response;
     }
 
@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
         Optional<User> userOptional = userRepository.findByUsername(userDTO.getUsername());
         if (userOptional.isPresent()) {
             if (passwordEncoder.matches(userDTO.getPassword(), userOptional.get().getPassword())) {
-                response.add("http://localhost:8080/home.html");
+                response.add("http://localhost:8080/landing.html");
                 response.add(String.valueOf(userOptional.get().getId()));
             } else {
                 response.add("Username or Password incorrect");

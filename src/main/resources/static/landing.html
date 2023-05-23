@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Landing</title>
+  <link href="https://fonts.googleapis.com/css2?family=Electrolize&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/layout.css" type="text/css">
+  <link rel="stylesheet" href="./css/form.css" type="text/css">
+
+</head>
+<body>
+<header>
+  <div class="logo-and-app-name">
+    <i class="fi fi-rs-bank" id="logo"></i>
+    <h2 id="app-name">VAULT</h2>
+  </div>
+  <nav>
+    <ul>
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Services</a></li>
+      <li><a href="#">Contact</a></li>
+      <li><a href="#" id="nav-login-signup">Log in / Sign up</a></li>
+    </ul>
+  </nav>
+</header>
+<main>
+  <!-- Main content goes here -->
+</main>
+<footer>
+  <!-- Footer content goes here -->
+</footer>
+
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <div class="container" id="container">
+
+      <!--Log in Form-->
+      <div class="form-container login-container">
+        <form id="login-form" action="#">
+
+          <h1 class="form-title">Log in</h1>
+
+          <label for="login-username"></label>
+          <input type="text" placeholder="Username" id="login-username" autocomplete="off"/>
+
+          <label for="login-password"></label>
+          <input type="password" placeholder="Password" id="login-password" autocomplete="off"/>
+
+          <button id="login-button" type="submit">Log in</button>
+        </form>
+      </div>
+
+      <!--Register Form-->
+      <div class="form-container register-container">
+        <form id="register-form" action="#">
+
+          <h1 class="form-title">Create Account</h1>
+
+          <label for="register-first-name"></label>
+          <input type="text" placeholder="First Name" id="register-first-name" autocomplete="off"/>
+
+          <label for="register-last-name"></label>
+          <input type="text" placeholder="Last Name" id="register-last-name" autocomplete="off"/>
+
+          <label for="register-email"></label>
+          <input type="email" placeholder="Email" id="register-email" autocomplete="off"/>
+
+          <label for="register-username"></label>
+          <input type="text" placeholder="Username" id="register-username" autocomplete="off"/>
+
+          <label for="register-password"></label>
+          <input type="password" placeholder="Password" id="register-password" autocomplete="off"/>
+
+          <button id="register-button" type="submit">Register</button>
+        </form>
+      </div>
+
+      <!--Switch between Register and Login-->
+      <div class="overlay-container">
+        <div class="overlay">
+
+          <!--Switch to Register form-->
+          <div class="overlay-panel overlay-right">
+            <h1 class="form-title">Don't have an account?</h1>
+            <button class="ghost" id="switch-to-register-button">Register</button>
+          </div>
+
+          <!--Switch to Login form-->
+          <div class="overlay-panel overlay-left">
+            <h1 class="form-title">Already have an account?</h1>
+            <button class="ghost" id="switch-to-login-button">Log in</button>
+            <p id="registration-warning">Warning: Debit card will be issued upon account registration</p>
+          </div>
+
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+<script src="./javascript/landing.js" type="application/javascript"></script>
+</body>
+</html>

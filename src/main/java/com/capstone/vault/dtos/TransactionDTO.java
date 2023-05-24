@@ -19,6 +19,7 @@ public class TransactionDTO {
     private String description;
     private LocalDateTime dateTime;
     private String recipientAccountNumber;
+    private AccountDTO accountInfo;
 
 
 

@@ -1,0 +1,162 @@
+main {
+    padding: 20px;
+}
+
+/* Cards */
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.card {
+    flex-basis: 100%;
+    max-width: calc(25% - 35px);
+    border-radius: 8px;
+    color: white;
+    padding: 10px;
+    position: relative;
+    background-color: #495057;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.card:hover,
+.card-active {
+    transition: background-color 0.5s ease-in-out;
+    background-color: #343A40;
+}
+
+.account-nickname,
+.total-balance-text {
+    font-size: 1.4vmin;
+    padding: 10px;
+    text-transform: uppercase;
+}
+
+.account-balance,
+.total-account-balance {
+    font-size: 3vmin;
+    padding-left: 10px;
+}
+
+.account-number,
+.all-accounts-text {
+    font-size: 1.1vmin;
+    margin-top: 15px;
+    padding-top: 10px;
+    text-transform: uppercase;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    transition: color 0.3s ease-in-out;
+}
+
+/* Table */
+.transactions-container {
+    background-color: #495057;
+    margin-top: 20px;
+    border-radius: 8px;
+}
+
+.transactions-header {
+    justify-content: flex-start !important;
+    align-items: center !important;
+    text-transform: uppercase;
+}
+
+.title {
+    font-size: 2.5vmin
+}
+
+.which-account {
+    font-size: 1.5vmin;
+    margin-left: 10px;
+    color: #212529;
+}
+
+.transactions-table {
+    background-color: #495057;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background-color: #343A40;
+}
+
+tr {
+    border-top: 1px solid #343A40;
+    transition: background-color 0.5s ease-in-out;
+
+}
+
+tr:hover {
+    transition: background-color 0.5s ease-in-out;
+    background-color: #343A40;
+}
+
+th {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    vertical-align: middle;
+    text-align: left;
+}
+
+.transactions-table .table-data {
+    padding-left: 20px;
+    vertical-align: middle;
+}
+
+.top-p {
+    font-size: 1.7vmin;
+    line-height: 0.5;
+}
+
+.bottom-p {
+    color: #212529;
+    font-size: 1.2vmin;
+    transition: color 0.5s ease-in-out;
+}
+
+tr:hover .bottom-p {
+    transition: color 0.5s ease-in-out;
+    color: #6C757D;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

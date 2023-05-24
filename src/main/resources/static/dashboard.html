@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Landing</title>
+    <link href="https://fonts.googleapis.com/css2?family=Electrolize&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/layout.css" type="text/css">
+    <link rel="stylesheet" href="./css/dashboard.css" type="text/css">
+
+</head>
+<body>
+<header>
+    <div class="logo-and-app-name">
+        <i class="fi fi-rs-bank" id="logo"></i>
+        <h2 id="app-name">VAULT</h2>
+    </div>
+
+    <nav>
+        <ul>
+            <li><a href="#" id="nav-accounts">Accounts</a></li>
+            <li><a href="#" id="nav-cards">Cards</a></li>
+            <li><a href="#" id="nav-loans">Loans</a></li>
+            <li><a href="#" id="nav-friends">Friends</a></li>
+            <li><a href="#" id="nav-transactions">Transactions</a></li>
+            <li><a href="#" id="nav-log-out">Log Out</a></li>
+        </ul>
+    </nav>
+
+</header>
+
+<main>
+
+    <!--Cards Start-->
+    <div class="grid" id="cardContainer">
+
+        <div class="card" id="card">
+            <div class="total-balance-text">Total Balance:</div>
+            <div class="total-account-balance">$785,687.56</div>
+            <div class="all-accounts-text">All Accounts</div>
+        </div>
+
+    </div>
+     <!--Cards End-->
+
+    <!--Transactions Table Start-->
+    <div class="transactions-container">
+
+        <header class="transactions-header">
+            <div class="title">Transactions</div>
+            <div class="which-account">| All Accounts</div>
+        </header>
+
+        <table class="transactions-table">
+            <thead>
+                <tr>
+                    <th>Transaction Type</th>
+                    <th>Amount</th>
+                    <th>Description</th>
+                    <th>Date</th>
+                    <th>Recipient Account</th>
+                </tr>
+            </thead>
+            <tbody class="transaction-body" id="transaction-body"></tbody>
+        </table>
+
+    </div>
+
+    <!--Transactions Table End-->
+
+
+</main>
+
+<script src="./javascript/dashboard.js" type="application/javascript"></script>
+
+</body>
+</html>

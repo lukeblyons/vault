@@ -18,7 +18,7 @@ public class AccountDTO implements Serializable {
     private String accountNumber;
     private BigDecimal accountBalance;
     private String card;
-    private UserDTO userInfo;
+    
 
 
 

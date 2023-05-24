@@ -15,12 +15,12 @@ public class TransactionController {
     @Autowired
     private TransactionService transactionService;
 
-    @GetMapping("/{userId}/{accountId}")
-    public List<TransactionDTO> getAllTransactionsByAccountId(@PathVariable Long accountId) {
+    @GetMapping("/{accountId}")
+    public List<TransactionDTO> getTransactionsByAccountId(@PathVariable Long accountId) {
         return transactionService.getAllTransactionsByAccountId(accountId);
     }
 
-    @PostMapping("/{userId}/{accountId}")
+    @PostMapping("/{accountId}")
     public void addTransaction(@RequestBody TransactionDTO transactionDTO, @PathVariable Long accountId) {
         transactionService.addTransaction(transactionDTO, accountId);
     }

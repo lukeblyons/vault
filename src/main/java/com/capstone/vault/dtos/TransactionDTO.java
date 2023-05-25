@@ -19,6 +19,7 @@ public class TransactionDTO {
     private String description;
     private LocalDateTime dateTime;
     private Long accountId;
+    private Long toAccountId; // Does not need to be added to entity
 
 
     public TransactionDTO(Transaction transaction) {
@@ -41,6 +42,14 @@ public class TransactionDTO {
             this.accountId = transaction.getAccount().getId();
         }
 
+    }
+
+    // Getter and Setter for toAccountId
+    public Long getToAccountId() {
+        return toAccountId;
+    }
+    public void setToAccountId(Long toAccountId) {
+        this.toAccountId = toAccountId;
     }
 
 }

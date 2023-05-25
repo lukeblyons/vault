@@ -88,5 +88,10 @@ public class Account {
         }
     }
 
+    // Used in findByUserId and findByNicknameAndUserId in the repository
+    public User getUser(){
+        return this.user;
+    }
+
 
 }

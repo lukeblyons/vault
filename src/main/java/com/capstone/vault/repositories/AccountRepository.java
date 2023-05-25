@@ -22,6 +22,6 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     @Query("SELECT a.card FROM Account a")
     Set<String> findAllCardNumbers();
 
-    // For "Transfer" transactions
-    Account findByAccountNumber(String accountNumber);
+    // For "Total Balance" account
+    List<Account> findByUserId(Long userId);
 }

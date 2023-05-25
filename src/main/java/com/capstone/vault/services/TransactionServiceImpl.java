@@ -48,29 +48,29 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     @Transactional
     public void addTransaction(TransactionDTO transactionDTO, Long accountId) {
-        Optional<Account> accountOptional = accountRepository.findById(accountId); // Retrieve the account by ID
+        Optional<Account> accountOptional = accountRepository.findById(accountId);
 
-        if (accountOptional.isPresent()) { // If the account exists, perform the transaction
-            Account fromAccount = accountOptional.get(); // Allows account balance to be retrieved
+        if (accountOptional.isPresent()) {
+            Account fromAccount = accountOptional.get();
 
-            Transaction transaction = new Transaction(transactionDTO, fromAccount); // Creates new Transaction entity from the incoming TransactionDTO
-            BigDecimal transactionAmount = transactionDTO.getAmount(); // Amount is manually entered, this gets it
-            BigDecimal fromAccountBalance = fromAccount.getAccountBalance(); // Gets the current account balance to use for add / subtract
+            Transaction transaction = new Transaction(transactionDTO, fromAccount);
+            BigDecimal transactionAmount = transactionDTO.getAmount();
+            BigDecimal fromAccountBalance = fromAccount.getAccountBalance();
 
-            // Handles Deposits
+            // Handles Deposits //
             if ("Deposit".equalsIgnoreCase(transactionDTO.getTransactionType())) {
-                fromAccount.setAccountBalance(fromAccountBalance.add(transactionAmount)); // "Deposit" adds to balance
+                fromAccount.setAccountBalance(fromAccountBalance.add(transactionAmount));
 
-                // Handles Withdraws
+                // Handles Withdraws //
             } else if ("Withdraw".equalsIgnoreCase(transactionDTO.getTransactionType())) {
-                if (transactionAmount.compareTo(fromAccountBalance) > 0) { // Makes sure they have enough in the account to withdraw
+                if (transactionAmount.compareTo(fromAccountBalance) > 0) {
                     throw new IllegalArgumentException("Insufficient account balance");
                 }
                 fromAccount.setAccountBalance(fromAccountBalance.subtract(transactionAmount));
 
-                // Handles Transfers from a users account to another one of their accounts
+                // Handles internal and external Transfers //
             } else if ("Transfer to".equalsIgnoreCase(transactionDTO.getTransactionType()) || "Send to".equalsIgnoreCase(transactionDTO.getTransactionType())) {
-                Long toAccountId = transactionDTO.getToAccountId(); // Assuming you've added this field to TransactionDTO
+                Long toAccountId = transactionDTO.getToAccountId();
                 Optional<Account> toAccountOptional = accountRepository.findById(toAccountId);
                 if (!toAccountOptional.isPresent()) {
                     throw new IllegalArgumentException("Invalid 'to' account id");
@@ -84,36 +84,28 @@ public class TransactionServiceImpl implements TransactionService {
                 fromAccount.setAccountBalance(fromAccountBalance.subtract(transactionAmount));
                 toAccount.setAccountBalance(toAccountBalance.add(transactionAmount));
 
-                // Add the transaction to 'to' account's transaction set as a Deposit
                 Transaction toTransaction = new Transaction(transactionDTO, toAccount);
                 if ("Transfer to".equalsIgnoreCase(transactionDTO.getTransactionType())) {
-                    toTransaction.setTransactionType("Transfer from " + fromAccount.getId());
+                    toTransaction.setTransactionType("Transferred from " + fromAccount.getNickname());
                 } else if ("Send to".equalsIgnoreCase(transactionDTO.getTransactionType())) {
-                    toTransaction.setTransactionType("Received from " + fromAccount.getId());
+                    toTransaction.setTransactionType("Received from " + fromAccount.getUser().getFirstName() + " " + fromAccount.getUser().getLastName());
                 }
                 toTransaction.setDateTime(LocalDateTime.now()); // Sets dateTime to current time for toTransaction
                 toAccount.getTransactionSet().add(toTransaction);
 
-                // Modify the transaction type for 'from' account to show the transfer to account id
                 if ("Transfer to".equalsIgnoreCase(transactionDTO.getTransactionType())) {
-                    transaction.setTransactionType("Transfer to " + toAccount.getId());
+                    transaction.setTransactionType("Transferred to " + toAccount.getNickname());
                 } else if ("Send to".equalsIgnoreCase(transactionDTO.getTransactionType())) {
-                    transaction.setTransactionType("Sent to " + toAccount.getId());
+                    transaction.setTransactionType("Sent to " + toAccount.getUser().getFirstName() + " " + fromAccount.getUser().getLastName());
                 }
 
-                // Save the 'to' transaction
                 transactionRepository.saveAndFlush(toTransaction);
                 accountRepository.saveAndFlush(toAccount);
             }
 
-
-            // Add the transaction to 'from' account's transaction set
             fromAccount.getTransactionSet().add(transaction);
-
-            // Set dateTime to current time for transaction
             transaction.setDateTime(LocalDateTime.now());
 
-            // Save the 'from' transaction
             transactionRepository.saveAndFlush(transaction);
             accountRepository.saveAndFlush(fromAccount);
         } else {

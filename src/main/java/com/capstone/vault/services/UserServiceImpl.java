@@ -37,6 +37,9 @@ public class UserServiceImpl implements UserService {
         accountService.addAccount(new AccountDTO(), user.getId());
         // Automatically creates "Savings" account after a user registers
         accountService.addAccount(new AccountDTO(), user.getId());
+        // Automatically creates "Retirement" account after a user registers
+        accountService.addAccount(new AccountDTO(), user.getId());
+
 
         response.add("http://localhost:8080/landing.html");
         return response;

@@ -43,12 +43,14 @@ public class AccountServiceImpl implements AccountService {
             account.setAccountNumber(generateAccountNumber()); // Generates the account number
             account.setAccountBalance(BigDecimal.ZERO); // Account balance starts at 0.00
 
-            // Automatically creates "Checking" and "Savings" accounts upon user registration
+            // Automatically creates "Checking", "Savings" and "Retirement" accounts upon user registration
             int accountCount = accountRepository.countByUser(userOptional.get());
             if (accountCount == 0) {
                 account.setNickname("Checking"); // User's first account's nickname is "Checking"
             } else if (accountCount == 1) {
                 account.setNickname("Savings"); // User's second account's nickname is "Savings"
+            } else if (accountCount == 2) {
+                account.setNickname("Retirement");
             }
 
             // Automatically creates card numbers if it is a "Checking" or "Credit account"

@@ -18,6 +18,7 @@ public class TransactionDTO {
     private BigDecimal amount;
     private String description;
     private LocalDateTime dateTime;
+    private Long accountId;
 
 
     public TransactionDTO(Transaction transaction) {
@@ -35,6 +36,9 @@ public class TransactionDTO {
         }
         if (transaction.getDateTime() != null) {
             this.dateTime = transaction.getDateTime();
+        }
+        if (transaction.getAccount() != null) {
+            this.accountId = transaction.getAccount().getId();
         }
 
     }

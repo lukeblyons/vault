@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Table(name = "Transactions")
@@ -37,9 +38,40 @@ public class Transaction {
     @JsonBackReference
     private Account account;
 
+    // Overrides the hashCode() method
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, transactionType, amount, description, dateTime);
+    }
+
+    // Overrides the equals() method
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Transaction that = (Transaction) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(transactionType, that.transactionType) &&
+                Objects.equals(amount, that.amount) &&
+                Objects.equals(description, that.description) &&
+                Objects.equals(dateTime, that.dateTime);
+    }
+
+    // Overrides the toString() method, excluding transactionSet to prevent recursive toString call
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "id=" + id +
+                ", transactionType='" + transactionType + '\'' +
+                ", amount=" + amount +
+                ", description='" + description + '\'' +
+                ", dateTime=" + dateTime +
+                // Exclude account field here
+                '}';
+    }
 
 
-    public Transaction(TransactionDTO transactionDTO) {
+    public Transaction(TransactionDTO transactionDTO, Account account) {
         if (transactionDTO.getTransactionType() != null) {
             this.transactionType = transactionDTO.getTransactionType();
         }
@@ -52,8 +84,8 @@ public class Transaction {
         if (transactionDTO.getDateTime() != null) {
             this.dateTime = transactionDTO.getDateTime();
         }
+        this.account = account;
 
     }
-
 
 }

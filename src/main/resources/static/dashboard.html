@@ -50,20 +50,20 @@
             <div class="which-account">| All Accounts</div>
         </header>
 
-        <table class="transactions-table">
+        <table>
             <thead>
-                <tr>
-                    <th>Transaction Type</th>
-                    <th>Amount</th>
-                    <th>Description</th>
-                    <th>Date</th>
-<!--                    <th>Recipient Account</th>-->
-                </tr>
-            </thead>
-            <tr class="transaction-row">
-
+            <tr>
+                <th>Transaction Type</th>
+                <th>Amount</th>
+                <th>Description</th>
+                <th>Date/Time</th>
             </tr>
+            </thead>
+            <tbody class="transaction-row">
+            <!-- Rows will be inserted here by createTransactionRows -->
+            </tbody>
         </table>
+
 
     </div>
 
@@ -72,7 +72,11 @@
 
 </main>
 
+<!--<script src="./javascript/transaction.js" type="application/javascript"></script>-->
+<!--<script src="./javascript/account.js" type="application/javascript"></script>-->
+
 <script src="./javascript/dashboard.js" type="application/javascript"></script>
+
 
 </body>
 </html>

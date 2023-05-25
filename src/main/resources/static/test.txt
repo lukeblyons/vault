@@ -1,0 +1,43 @@
+// Transaction Rows //
+async function getAllTransactionsByAccountId(accountId) {
+  await fetch(`${baseUrl}/transactions/${userId}/${accountId}`, {
+    method: "GET",
+    headers: headers
+  })
+    .then((response) => response.json())
+    .then((data) => createTransactionRow(data))
+    .catch((err) => console.error(err));
+}
+
+const createTransactionRow = (array) => {
+  transactionBody.innerHTML = "";
+
+  array.forEach((obj) => {
+    let transactionRow = document.createElement("tr");
+    transactionRow.innerHTML = `
+      <td class="table-data transaction-type">
+        <p class="top-p">${obj.transactionType}</p>
+        <p class="bottom-p">Approved</p>
+      </td>
+      <td class="table-data transaction-amount">
+        <p class="top-p">$${obj.amount}</p>
+        <p class="bottom-p">USD</p>
+      </td>
+      <td class="table-data transaction-description">
+        <p class="top-p">${obj.description}</p>
+        <p class="bottom-p">Direct Deposit</p>
+      </td>
+      <td class="table-data transaction-date">
+        <p class="top-p">${obj.dateTime}</p>
+        <p class="bottom-p">USD</p>
+      </td>
+      <td class="table-data transaction-recipient-account">
+        <p class="top-p">${obj.recipientAccountNumber}</p>
+        <p class="bottom-p">Approved</p>
+      </td>`;
+    transactionBody.append(transactionRow);
+  });
+};
+
+// Call the function with the userId variable
+getAllTransactionsByAccountId(accountId);

@@ -1,124 +1,97 @@
 // Cookie //
-const cookieArr = document.cookie.split("=")
+const cookieArr = document.cookie.split("=");
 const userId = cookieArr[1];
 
-// DOM Elements //
-const cardContainer = document.getElementById('card-container')
-const transactionBody = document.getElementById("transaction-body");
-
-// #1 - Account Cards //
-let accountBalanceTotal = document.getElementById('total-account-balance');
-
-let nickname = document.getElementById('account-nickname');
-let accountBalance = document.getElementById('account-balance');
-let accountNumber = document.getElementById('account-number');
-
-
-// #2 Transaction Rows //
-let transactionType = document.getElementById('transaction-type');
-let amount = document.getElementById('transaction-amount');
-let description = document.getElementById('transaction-description');
-let dateTime = document.getElementById('transaction-date');
-let recipientAccountNumber = document.getElementById('transaction-recipient-account');
-
-
+// Headers and Base Url //
 const headers = {
-    'Content-Type': 'application/json'
-}
-
-const baseUrl = 'http://localhost:8080/accounts';
-
-async function getAccountsByUserId(userId) {
-    await fetch(`${baseUrl}/user/${userId}`,{
-        method: "GET",
-        headers: headers
-    })
-        .then(response => response.json())
-        .then(data => createAccountCard(data))
-        .catch(err => console.error(err))
-}
-
-const createAccountCard = (array) => {
-    const grid = document.querySelector('.grid');
-    grid.innerHTML = '';
-
-    array.sort((a, b) => a.accountId - b.accountId);
-
-    array.forEach(obj => {
-        let accountCard = document.createElement("div");
-        accountCard.classList.add("card");
-        accountCard.innerHTML = `
-            <div class="account-nickname">${obj.nickname} Account:</div>
-            <div class="account-balance">$ ${obj.accountBalance}</div>
-            <div class="account-number">Account Number: ${obj.accountNumber}</div>`;
-        grid.append(accountCard);
-    });
+  "Content-Type": "application/json",
 };
-getAccountsByUserId(userId);
 
+const baseUrl = "http://localhost:8080";
 
-
-// Transaction Rows //
-async function getAllTransactionsByAccountId(accountId) {
-  await fetch(`${baseUrl}/transactions/${userId}/${accountId}`, {
+// Fetch and create account cards
+async function getAccountsByUserId(userId) {
+  const response = await fetch(`${baseUrl}/accounts/user/${userId}`, {
     method: "GET",
-    headers: headers
-  })
-    .then((response) => response.json())
-    .then((data) => createTransactionRow(data))
-    .catch((err) => console.error(err));
+    headers: headers,
+  });
+  console.log('getAccountsByUserId response:', response);
+  const data = await response.json();
+  console.log('getAccountsByUserId data:', data);
+  createAccountCard(data);
 }
 
-const createTransactionRow = (array) => {
-  transactionBody.innerHTML = "";
+// Create account cards
+const createAccountCard = (array) => {
+  const grid = document.querySelector('.grid');
+  grid.innerHTML = '';
 
-  array.forEach((obj) => {
-    let transactionRow = document.createElement("tr");
-    transactionRow.innerHTML = `
-      <td class="table-data transaction-type">
-        <p class="top-p">${obj.transactionType}</p>
-        <p class="bottom-p">Approved</p>
-      </td>
-      <td class="table-data transaction-amount">
-        <p class="top-p">$${obj.amount}</p>
-        <p class="bottom-p">USD</p>
-      </td>
-      <td class="table-data transaction-description">
-        <p class="top-p">${obj.description}</p>
-        <p class="bottom-p">Direct Deposit</p>
-      </td>
-      <td class="table-data transaction-date">
-        <p class="top-p">${obj.dateTime}</p>
-        <p class="bottom-p">USD</p>
-      </td>
-      <td class="table-data transaction-recipient-account">
-        <p class="top-p">${obj.recipientAccountNumber}</p>
-        <p class="bottom-p">Approved</p>
-      </td>`;
-    transactionBody.append(transactionRow);
+  array.sort((a, b) => a.id - b.id);
+
+  array.forEach(obj => {
+    console.log('obj.id:', obj.id);
+    let accountCard = document.createElement("div");
+    accountCard.classList.add("card");
+    accountCard.setAttribute("id", obj.id); // Set account ID as id attribute
+    accountCard.innerHTML = `
+      <div class="account-nickname">${obj.nickname} Account:</div>
+      <div class="account-balance">$ ${obj.accountBalance}</div>
+      <div class="account-number">Account Number: ${obj.accountNumber}</div>`;
+    grid.append(accountCard);
+
+    // Set up event listener for each card
+    accountCard.addEventListener("click", () => {
+      // Remove active class from all cards
+      document.querySelectorAll(".card").forEach((c) => c.classList.remove("card-active"));
+
+      // Add active class to clicked card
+      accountCard.classList.add("card-active");
+
+      // Fetch transactions for this account
+      const accountId = accountCard.getAttribute("id");
+      console.log('accountId:', accountId);
+      getAllTransactionsByAccountId(accountId);
+    });
   });
 };
 
-// Call the function with the userId variable
-getAllTransactionsByAccountId(accountId);
+// Fetch and create transaction rows
+async function getAllTransactionsByAccountId(accountId) {
+  const response = await fetch(`${baseUrl}/transactions/account/${accountId}`, {
+    method: "GET",
+    headers: headers,
+  });
+  console.log('getAllTransactionsByAccountId response:', response);
+  const data = await response.json();
+  console.log('getAllTransactionsByAccountId data:', data);
+  createTransactionRows(data);
+}
 
-/*
-      <td class="table-data transaction-date">
-        <p class="top-p">${obj.dateTime.format(DateTimeFormatter.ofPattern('dd MMM, yyyy HH:mm:ss'))}</p>
-        <p class="bottom-p">${obj.dateTime.format(DateTimeFormatter.ofPattern('h:mm:ss a'))}</p>
+// Create transaction rows
+function createTransactionRows(data) {
+  const tbody = document.querySelector(".transaction-row");
+  tbody.innerHTML = "";
+
+  data.forEach((transaction) => {
+    let transactionRow = document.createElement("tr");
+    transactionRow.innerHTML = `
+      <td class="table-data">${transaction.transactionType}
+        <p>Approved</p>
       </td>
-*/
+      <td class="table-data">$${transaction.amount}
+        <p>USD</p>
+      </td>
+      <td class="table-data">${transaction.description}
+        <p>Memo</p>
+      </td>
+      <td class="table-data">${transaction.dateTime}
+        <p>MST</p>
+      </td>
+    `;
 
+    tbody.appendChild(transactionRow);
+  });
+}
 
-
-
-
-// Card color changes on hover and active //
-const cards = document.querySelectorAll('.card');
-
-cards.forEach(card => {
-    card.addEventListener('click', () => {
-        cards.forEach(c => c.classList.remove('card-active'));
-        card.classList.add('card-active');
-    });
-});
+// Initialize the page
+getAccountsByUserId(userId);

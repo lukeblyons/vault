@@ -10,5 +10,5 @@ import java.util.List;
 
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
-    List<Transaction> findAllByAccountEquals(Account account);
+    List<Transaction> findAllByAccountId(Long accountId);
 }

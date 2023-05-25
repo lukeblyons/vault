@@ -12,6 +12,7 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Objects;
 
 @Entity
 @Table(name = "Accounts")
@@ -42,6 +43,34 @@ public class Account {
     @OneToMany(mappedBy = "account", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private Set<Transaction> transactionSet = new HashSet<>();
+
+    // Overrides the hashCode() method, excluding transactionSet to prevent recursive hashcode calculations
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, accountBalance);
+        // Exclude transactionSet
+    }
+
+    // Overrides the equals() method, excluding transactionSet to prevent recursive equals check
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Account account = (Account) o;
+        return Objects.equals(id, account.id) &&
+                Objects.equals(accountBalance, account.accountBalance);
+        // Exclude transactionSet
+    }
+
+    // Overrides the toString() method, excluding transactionSet to prevent recursive toString call
+    @Override
+    public String toString() {
+        return "Account{" +
+                "id=" + id +
+                ", accountBalance=" + accountBalance +
+                // Exclude transactionSet field here
+                '}';
+    }
 
 
     public Account(AccountDTO accountDTO) {

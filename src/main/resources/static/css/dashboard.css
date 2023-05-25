@@ -72,7 +72,7 @@ main {
     color: #212529;
 }
 
-.transactions-table {
+table {
     background-color: #495057;
     width: 100%;
     border-collapse: collapse;
@@ -85,7 +85,6 @@ thead {
 tr {
     border-top: 1px solid #343A40;
     transition: background-color 0.5s ease-in-out;
-
 }
 
 tr:hover {
@@ -101,62 +100,25 @@ th {
     text-align: left;
 }
 
-.transactions-table .table-data {
+.transaction-row {
     padding-left: 20px;
     vertical-align: middle;
-}
-
-.top-p {
     font-size: 1.7vmin;
     line-height: 0.5;
 }
 
-.bottom-p {
+td {
+    font-size: 1.7vmin;
+    line-height: 0.5;
+}
+
+p {
     color: #212529;
     font-size: 1.2vmin;
     transition: color 0.5s ease-in-out;
 }
 
-tr:hover .bottom-p {
+tr:hover p {
     transition: color 0.5s ease-in-out;
     color: #6C757D;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -107,6 +107,7 @@ body {
     border-radius: 10px;
     color: black;
     transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out, border-color 0.5s ease-in-out;
+    cursor: pointer;
 }
 
 .card:hover,
@@ -125,7 +126,7 @@ body {
 
 .account-balance,
 .total-account-balance {
-    padding-bottom: 40px;
+    padding-bottom: 30px;
     font-size: 4vmin;
 }
 
@@ -145,16 +146,27 @@ body {
     border-color: white;
 }
 
-.add-icon {
+.add-icon,
+.remove-icon{
     position: absolute;
     top: 5px;
     right: 5px;
+    transition: color 0.3s ease-in-out;
 }
 
-.remove-icon {
-    position: absolute;
-    top: 5px;
-    right: 5px;
+.card:hover .add-icon,
+.card:hover .remove-icon {
+    color: white;
+}
+
+.card-active .add-icon,
+.card-active .remove-icon {
+    color: white;
+}
+
+.card-active .add-icon:hover,
+.card-active .remove-icon:hover {
+    color: black;
 }
 /* CONTAINER 1 END */
 
@@ -187,6 +199,80 @@ body {
     margin-left: 20px;
     margin-bottom: 20px;
     border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.action-icons-container {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    justify-content: space-between;
+    padding-top: 10px;
+}
+
+.action-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: color 0.3s ease-in-out;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.icon-text {
+    margin-top: -1px;
+    transition: color 0.3s ease-in-out;
+}
+
+.action-icon:hover,
+.action-icon:hover .icon-text {
+    color: #87BFFF;
+}
+
+.transaction-forms-container{
+    margin-top: 1vmin;
+    flex-direction: column;
+
+}
+
+.transaction-form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.transaction-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.transaction-form input[type="text"],
+.transaction-form input[type="number"],
+.transaction-form select {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    box-shadow: 1px 1px 3px lightblue;
+}
+
+.transaction-form input[type="submit"] {
+    background-color: #87BFFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.transaction-form input[type="submit"]:hover {
+    background-color: white;
+    color: #87BFFF;
 }
 /* CONTAINER 2 END */
 
@@ -272,13 +358,13 @@ tr:hover {
 }
 
 td {
-    font-size: 1.7vmin;
+    font-size: 1.4vmin;
     line-height: 0.5;
 }
 
 p {
-    color: #212529;
-    font-size: 1.2vmin;
+    color: #495057;
+    font-size: 1vmin;
     transition: color 0.5s ease-in-out;
 }
 

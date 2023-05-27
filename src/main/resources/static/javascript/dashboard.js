@@ -150,3 +150,7 @@ function createTransactionRows(data) {
 
 // Initialize the page
 getAccountsByUserId(userId);
+
+
+
+

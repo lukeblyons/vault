@@ -5,6 +5,7 @@
     <title>Title</title>
     <link href="https://fonts.googleapis.com/css2?family=Electrolize&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="./css/dashboard.css">
 </head>
 
@@ -39,7 +40,30 @@
         <div class="transactions-form-title">Transfer</div>
     </div>
 
-    <div class="container-2"></div>
+    <div class="container-2">
+        <div class="action-icons-container">
+
+            <div class="action-icon send-icon">
+                <span class="material-symbols-sharp">social_distance</span>
+                <p class="icon-text">Send</p>
+            </div>
+            <div class="action-icon transfer-icon">
+                <span class="material-symbols-sharp">metabolism</span>
+                <p class="icon-text">Transfer</p>
+            </div>
+            <div class="action-icon deposit-icon">
+                <span class="material-symbols-sharp">savings</span>
+                <p class="icon-text">Deposit</p>
+            </div>
+            <div class="action-icon withdraw-icon">
+                <span class="material-symbols-sharp">atm</span>
+                <p class="icon-text">Withdraw</p>
+            </div>
+
+        </div>
+
+        <div class="transaction-form-container"></div>
+    </div>
 
     <div class="container-3-title">
         <div class="transactions-table-title">Transactions</div>
@@ -66,5 +90,7 @@
 </div>
 
 <script src="./javascript/dashboard.js" type="application/javascript"></script>
+<script src="./javascript/transaction-forms.js" type="application/javascript"></script>
+
 </body>
 </html>

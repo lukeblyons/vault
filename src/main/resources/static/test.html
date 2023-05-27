@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link href="https://fonts.googleapis.com/css2?family=Electrolize&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="./css/test.css">
+</head>
+
+<body>
+
+    <div class="grid-container">
+
+        <header class="main-header">
+            <div class="logo-and-app-name">
+                <i class="fi fi-rs-bank" id="logo"></i>
+                <h2 id="app-name">VAULT</h2>
+            </div>
+            <div class="log-out">Log Out</div>
+        </header>
+
+        <div class="container-1-title">
+            <div class="accounts-title">Accounts</div>
+        </div>
+        <div class="container-1">
+            <div class="card">
+                <div class="account-nickname">Checking Account:</div>
+                <div class="account-balance">$125,000</div>
+                <div class="account-number">Account Number: 125-456789</div>
+                <i class="material-icons add-icon">add</i>
+            </div>
+            <div class="card"></div>
+            <div class="card"></div>
+            <div class="card"></div>
+        </div>
+
+        <div class="container-2-title">
+            <div class="transactions-form-title">Transfer</div>
+        </div>
+
+        <div class="container-2"></div>
+
+        <div class="container-3-title">
+            <div class="transactions-table-title">Transactions</div>
+            <div class="which-account">| All Accounts</div>
+
+            <div class="filter-container">
+                <span class="filter-text">Filter</span>
+                <i class="material-icons filter-list-icon">filter_list</i>
+            </div>
+        </div>
+
+        <div class="container-3">
+            <table class="transactions-table">
+                <tbody class="transaction-row"></tbody>
+            </table>
+        </div>
+
+        <div class="container-4-title">
+            <div class="example-title">Example</div>
+        </div>
+
+        <div class="container-4"></div>
+
+    </div>
+
+    <script src="./javascript/dashboard.js" type="application/javascript"></script>
+</body>
+</html>

@@ -81,9 +81,6 @@ public class Transaction {
         if (transactionDTO.getDescription() != null) {
             this.description = transactionDTO.getDescription();
         }
-        if (transactionDTO.getDateTime() != null) {
-            this.dateTime = transactionDTO.getDateTime();
-        }
         this.account = account;
 
     }

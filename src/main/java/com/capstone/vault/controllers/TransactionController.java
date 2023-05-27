@@ -35,6 +35,12 @@ public class TransactionController {
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
+    // Gets all transactions for a specific user
+    @GetMapping("/user/{userId}")
+    public List<TransactionDTO> getAllTransactionsByUserId(@PathVariable Long userId) {
+        return transactionService.getAllTransactionsByUserId(userId);
+    }
+
 
     // Adds transaction to database
     @PostMapping("/{accountId}")

@@ -28,14 +28,11 @@ public class TransactionServiceImpl implements TransactionService {
     @Transactional(readOnly = true)
     @Override
     public List<TransactionDTO> getAllTransactionsByAccountId(Long accountId) {
-        // Retrieve the account by ID
         Optional<Account> accountOptional = accountRepository.findById(accountId);
         if (accountOptional.isPresent()) {
-            // If the account is present, fetch its transactions
             Account account = accountOptional.get();
             Set<Transaction> transactions = account.getTransactionSet();
             System.out.println("Transactions for Account ID " + accountId + ": " + transactions);
-            // Convert each Transaction entity to a TransactionDTO and collect them into a list
             return transactions.stream()
                     .map(TransactionDTO::new)
                     .collect(Collectors.toList());
@@ -44,6 +41,22 @@ public class TransactionServiceImpl implements TransactionService {
         return Collections.emptyList(); // Returns empty list if the account doesn't exist
     }
 
+    @Transactional(readOnly = true)
+    @Override
+    public List<TransactionDTO> getAllTransactionsByUserId(Long userId) {
+        List<Account> userAccounts = accountRepository.findByUserId(userId);
+        List<Transaction> allTransactions = new ArrayList<>();
+
+        for (Account account : userAccounts) {
+            allTransactions.addAll(account.getTransactionSet());
+        }
+
+        List<TransactionDTO> allTransactionDTOs = allTransactions.stream()
+                .map(TransactionDTO::new)
+                .collect(Collectors.toList());
+
+        return allTransactionDTOs;
+    }
 
     @Override
     @Transactional

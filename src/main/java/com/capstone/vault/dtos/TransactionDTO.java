@@ -7,7 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Data
 @AllArgsConstructor
@@ -17,7 +17,8 @@ public class TransactionDTO {
     private String transactionType;
     private BigDecimal amount;
     private String description;
-    private LocalDateTime dateTime;
+    private String formattedDate;
+    private String formattedTime;
     private Long accountId;
     private Long toAccountId; // Does not need to be added to entity
 
@@ -36,7 +37,11 @@ public class TransactionDTO {
             this.description = transaction.getDescription();
         }
         if (transaction.getDateTime() != null) {
-            this.dateTime = transaction.getDateTime();
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
+            this.formattedDate = transaction.getDateTime().format(dateFormatter);
+
+            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm a");
+            this.formattedTime = transaction.getDateTime().format(timeFormatter);
         }
         if (transaction.getAccount() != null) {
             this.accountId = transaction.getAccount().getId();

@@ -1,90 +1,133 @@
-const sendForm = `
-<form id="send-form" class="transaction-form">
-  <div class="form-title">Send to a friend</div>
-  <input type="text" id="send-to-username" placeholder="Username" />
-  <input type="text" id="send-description" placeholder="Description" />
-  <input type="number" id="send-amount" placeholder="Amount" min="0.01" step="0.01" />
-  <input type="submit" value="Send" />
-</form>`;
+// Action Icon Event Listeners
+document.querySelector('.deposit-icon').addEventListener('click', () => displayForm('deposit-form', ['Account ID', 'Amount', 'Description'], submitDepositForm, 'Deposit'));
+document.querySelector('.withdraw-icon').addEventListener('click', () => displayForm('withdraw-form', ['Account ID', 'Amount', 'Description'], submitWithdrawForm, 'Withdraw', 'Hold your phone up to the ATM sensor and click "Withdraw"'));
+document.querySelector('.transfer-icon').addEventListener('click', () => displayForm('transfer-form', ['From Account ID', 'To Account ID', 'Amount', 'Description'], submitTransferForm, 'Transfer'));
+document.querySelector('.send-icon').addEventListener('click', () => displayForm('send-form', ['Account ID', 'To Account ID', 'Amount', 'Description'], submitSendForm, 'Send'));
 
-const transferForm = `
-<form id="transfer-form" class="transaction-form">
-  <div class="form-title">Transfer to another account</div>
-  <select id="transfer-from-account"></select>
-  <select id="transfer-to-account"></select>
-  <input type="text" id="transfer-description" placeholder="Description" />
-  <input type="number" id="transfer-amount" placeholder="Amount" min="0.01" step="0.01" />
-  <input type="submit" value="Transfer" />
-</form>`;
+// Common function to display any form
+function displayForm(formId, labels, eventListenerFunction, formTitle, instruction = null) {
+    const transactionFormContainer = document.querySelector('.transaction-form-container');
+    let innerHTML = `<h2>${formTitle}</h2><form id="${formId}">`;
 
-const depositForm = `
-<form id="deposit-form" class="transaction-form">
-  <div class="form-title"></div>
-  <select id="deposit-account">Deposit via Stripe</select>
-  <input type="text" id="deposit-description" placeholder="Description" />
-  <input type="number" id="deposit-amount" placeholder="Amount" min="0.01" step="0.01" />
-  <input type="submit" value="Deposit" />
-</form>`;
+    labels.forEach((label, index) => {
+        if (label.toLowerCase().includes('account id')) {
+            let accountIdType = (label.toLowerCase().includes('from')) ? '-from-account-id' : '-to-account-id';
+            let inputType = (label.toLowerCase().includes('to') && formId === 'send-form') ? 'input' : 'select';
+            if (formId !== 'transfer-form' && formId !== 'send-form') accountIdType = '-account-id';
+            innerHTML += `
+                <label for="${formId}${accountIdType}">${label}</label>
+                <${inputType} id="${formId}${accountIdType}"></${inputType}>`;
+        } else {
+            innerHTML += `
+                <label for="${formId}-${label.toLowerCase().replace(' ', '-')}">${label}</label>
+                <input id="${formId}-${label.toLowerCase().replace(' ', '-')}"" type="text" autocomplete="off" required />`;
+        }
+    });
 
-const withdrawForm = `
-<form id="withdraw-form" class="transaction-form">
-  <div class="form-title">Withdraw</div>
-  <select id="withdraw-account"></select>
-  <input type="number" id="withdraw-amount" placeholder="Amount" min="0.01" step="0.01" />
-  <p>Hold your phone up to the ATM sensor and click Withdraw</p>
-  <input type="submit" value="Withdraw" />
-</form>`;
+    if (instruction) {
+        innerHTML += `<p class="form-instruction">${instruction}</p>`;
+    }
 
+    innerHTML += `<button type="submit">${formTitle}</button></form>`;
+    transactionFormContainer.innerHTML = innerHTML;
 
-const formContainer = document.querySelector('.transaction-form-container');
+    // fill account options
+    const accountIdSelects = document.querySelectorAll(`#${formId} select[id$="-account-id"]`);
+    if (accountIdSelects) {
+        accountIdSelects.forEach(select => fillAccountOptions(select));
+    }
 
-
-function appendForm(form) {
-  formContainer.innerHTML = form;
+    document.querySelector(`#${formId}`).addEventListener('submit', eventListenerFunction);
 }
 
-// Function to populate select elements with account options
-function populateAccountSelects() {
-  fetch(``)
-    .then(response => response.json())
-    .then(accounts => {
-      let selectElements = document.querySelectorAll('select');
-      selectElements.forEach(select => {
-        // Clear previous options
-        select.options.length = 0;
 
-        // Add an option for each account
-        accounts.forEach(account => {
-          let option = document.createElement('option');
-          option.value = account.id;
-          option.text = account.name;
-          select.add(option);
-        });
-      });
-    })
-    .catch((error) => {
-      console.error('Error:', error);
+// Fetch and fill account options
+async function fillAccountOptions(accountIdSelect) {
+    const response = await fetch(`${baseUrl}/accounts/user/${userId}`, {
+        method: "GET",
+        headers: headers,
+    });
+
+    let data = await response.json();
+
+    // Sort the accounts by nickname
+    data = data.sort((a, b) => a.nickname.localeCompare(b.nickname));
+
+    data.forEach(account => {
+        const option = document.createElement('option');
+        option.value = account.id;
+        option.text = account.nickname;
+        accountIdSelect.appendChild(option);
     });
 }
 
-// Add event listeners to the icons
-document.querySelector('.send-icon').addEventListener('click', () => appendForm(sendForm));
-document.querySelector('.transfer-icon').addEventListener('click', () => {
-  appendForm(transferForm);
-  populateAccountSelects();
-});
-document.querySelector('.deposit-icon').addEventListener('click', () => {
-  appendForm(depositForm);
-  populateAccountSelects();
-});
-document.querySelector('.withdraw-icon').addEventListener('click', () => {
-  appendForm(withdrawForm);
-  populateAccountSelects();
-});
+// Handling form submission
+const handleSubmit = async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const accountId = form.querySelector('select[id$="-from-account-id"], select[id$="-account-id"]').value;
+    const amount = form.querySelector('input[id$="-amount"]').value;
+    const description = form.querySelector('input[id$="-description"]').value;
+    let bodyObj = {};
 
-// Event listener for form submissions
-document.addEventListener('submit', function (event) {
-  event.preventDefault();
+    switch (e.target.id) {
+        case 'deposit-form':
+        case 'withdraw-form':
+            bodyObj = {
+                transactionType: e.target.id.split('-')[0],
+                amount: amount,
+                description: description
+            };
+            break;
+        case 'transfer-form':
+            const toAccountId = form.querySelector('select[id$="-to-account-id"]').value;
+            bodyObj = {
+                transactionType: "Transfer to",
+                toAccountId: toAccountId,
+                amount: amount,
+                description: description
+            };
+            break;
+        case 'send-form':
+            const toAccountIdSend = form.querySelector('input[id$="-to-account-id"]').value;
+            bodyObj = {
+                transactionType: "Send to",
+                toAccountId: toAccountIdSend,
+                amount: amount,
+                description: description
+            };
+            break;
+    }
+
+    try {
+        const response = await fetch(`${baseUrl}/transactions/${accountId}`, {
+            method: 'POST',
+            body: JSON.stringify(bodyObj),
+            headers: headers
+        });
+
+        if (response.ok) {
+            const jsonResponse = await response.json();
+            console.log(jsonResponse);
+            form.reset();
+        } else {
+            console.log(`Error: ${response.status}`);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+
+    location.reload();
+};
 
 
-}, false);
+// Event listeners for form submissions
+const submitDepositForm = (e) => handleSubmit(e);
+const submitWithdrawForm = (e) => handleSubmit(e);
+const submitTransferForm = (e) => handleSubmit(e);
+const submitSendForm = (e) => handleSubmit(e);
+
+// Trigger 'click' event on the 'send-icon' element after the page loads
+window.onload = function() {
+    document.querySelector('.send-icon').click();
+};

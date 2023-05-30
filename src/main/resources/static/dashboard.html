@@ -2,11 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Electrolize&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <link rel="stylesheet" href="./css/dashboard.css">
+    <link rel="stylesheet" href="./css/dashboard/dashboard.css">
+    <link rel="stylesheet" href="./css/dashboard/container-1.css">
+    <link rel="stylesheet" href="./css/dashboard/container-2.css">
+    <link rel="stylesheet" href="./css/dashboard/container-3.css">
+    <link rel="stylesheet" href="./css/dashboard/container-4.css">
 </head>
 
 <body>
@@ -25,15 +29,7 @@
         <div class="accounts-title">Accounts</div>
     </div>
     <div class="container-1">
-        <div class="card">
-            <div class="account-nickname">Checking Account:</div>
-            <div class="account-balance">$125,000</div>
-            <div class="account-number">Account Number: 125-456789</div>
-            <i class="material-icons add-icon">add</i>
-        </div>
-        <div class="card"></div>
-        <div class="card"></div>
-        <div class="card"></div>
+
     </div>
 
     <div class="container-2-title">
@@ -43,19 +39,19 @@
     <div class="container-2">
         <div class="action-icons-container">
 
-            <div class="action-icon send-icon">
+            <div class="action-icon send-icon" id="send-icon">
                 <span class="material-symbols-sharp">social_distance</span>
                 <p class="icon-text">Send</p>
             </div>
-            <div class="action-icon transfer-icon">
+            <div class="action-icon transfer-icon" id="transfer-icon">
                 <span class="material-symbols-sharp">metabolism</span>
                 <p class="icon-text">Transfer</p>
             </div>
-            <div class="action-icon deposit-icon">
+            <div class="action-icon deposit-icon" id="deposit-icon">
                 <span class="material-symbols-sharp">savings</span>
                 <p class="icon-text">Deposit</p>
             </div>
-            <div class="action-icon withdraw-icon">
+            <div class="action-icon withdraw-icon" id="withdraw-icon">
                 <span class="material-symbols-sharp">atm</span>
                 <p class="icon-text">Withdraw</p>
             </div>
@@ -67,7 +63,7 @@
 
     <div class="container-3-title">
         <div class="transactions-table-title">Transactions</div>
-        <div class="which-account">| All Accounts</div>
+        <div class="which-account"></div>
 
         <div class="filter-container">
             <span class="filter-text">Filter</span>
@@ -77,7 +73,7 @@
 
     <div class="container-3">
         <table class="transactions-table">
-            <tbody class="transaction-row"></tbody>
+            <tbody class="transactions-table-body"></tbody>
         </table>
     </div>
 
@@ -85,7 +81,29 @@
         <div class="example-title">Example</div>
     </div>
 
-    <div class="container-4"></div>
+    <div class="container-4">
+
+        <div class="card">
+
+            <div class="card-logo">
+                <i class="fi fi-rs-bank"></i>
+                <div class="card-logo-text">VAULT</div>
+            </div>
+            <div class="img-container">
+                <div class="chip"><img src="https://cdn-icons-png.flaticon.com/128/3877/3877368.png" alt="chip"></div>
+                <div class="card-tap"><img src="https://cdn-icons-png.flaticon.com/128/6107/6107543.png" alt="tap"></div>
+            </div>
+            <div class="card-number">8654 - 6848 - 8465 - 5426</div>
+            <div class="card-info">
+                <div class="card-name">Luke Lyons</div>
+                <div class="exp-date">EXP: 12 / 25</div>
+            </div>
+
+
+
+        </div>
+
+    </div>
 
 </div>
 

@@ -1,0 +1,70 @@
+@import url('https://cdn-uicons.flaticon.com/uicons-regular-straight/css/uicons-regular-straight.css');
+
+
+html,
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Electrolize', sans-serif;
+    background-color: #F0F8FF;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(16, 1fr);
+    grid-template-rows: repeat(16, 1fr);
+    width: 100%;
+    height: 100%;
+    gap: 20px;
+}
+
+.main-header {
+    grid-column: 1 / -1;
+    grid-row: 1 / 3;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-and-app-name {
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+}
+
+.fi {
+  font-size: 25px;
+  margin-right: 10px;
+}
+
+#app-name {
+  font-size: 30px;
+}
+
+.log-out {
+  list-style: none;
+  display: inline-block;
+  margin-right: 20px;
+  transition: transform 0.4s ease-in-out;
+}
+
+.log-out {
+  text-decoration: none;
+  padding: 5px 10px;
+}
+
+/* ALL CONTAINERS */
+.container-2,
+.container-3,
+.container-4,
+.card,
+ header {
+    background-color: white;
+    box-shadow: 1px 1px 3px  lightblue;
+}

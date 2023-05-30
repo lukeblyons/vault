@@ -1,0 +1,96 @@
+.container-1 {
+    grid-column: 1 / 13;
+    grid-row: 3 / 7;
+    display: flex;
+    margin-top: 40px;
+    margin-left: 20px;
+    gap: 20px;
+}
+
+.container-1-title {
+    grid-column: 1 / 13;
+    grid-row: 3 / 4;
+    margin-top: -20px;
+    margin-bottom: 0;
+    margin-left: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.accounts-title {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 2vmin;
+    margin-right: 10px;
+    padding-left: 20px;
+}
+
+.card {
+    position: relative;
+    width: 25%;
+    padding: 20px;
+    border-radius: 10px;
+    color: black;
+    transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out, border-color 0.5s ease-in-out;
+    cursor: pointer;
+}
+
+.card:hover,
+.card-active {
+    background-color: #87BFFF;
+    color: white;
+    border-color: #87BFFF;
+}
+
+.account-nickname,
+.total-balance-text {
+    padding-bottom: 20px;
+    font-size: 1.4vmin;
+    text-transform: uppercase;
+}
+
+.account-balance,
+.total-account-balance {
+    padding-bottom: 30px;
+    font-size: 4vmin;
+}
+
+.account-number,
+.all-accounts-text {
+    padding-top: 8px;
+    font-size: 1.1vmin;
+    text-transform: uppercase;
+    border-top: 1px solid black;
+    transition: border-color 0.5s ease-in-out;
+}
+
+.card:hover .account-number,
+.card:hover .all-accounts-text,
+.card-active .account-number,
+.card-active .all-accounts-text {
+    border-color: white;
+}
+
+.add-icon,
+.remove-icon{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    transition: color 0.3s ease-in-out;
+}
+
+.card:hover .add-icon,
+.card:hover .remove-icon {
+    color: white;
+}
+
+.card-active .add-icon,
+.card-active .remove-icon {
+    color: white;
+}
+
+.card-active .add-icon:hover,
+.card-active .remove-icon:hover {
+    color: black;
+}

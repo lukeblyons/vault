@@ -19,7 +19,8 @@ async function getAccountsByUserId(userId) {
   createAccountCard(data);
 }
 
-// Create account cards
+
+// ACCOUNT CARDS //
 const createAccountCard = async (array) => {
   const grid = document.querySelector('.container-1');
   grid.innerHTML = '';
@@ -40,6 +41,7 @@ const createAccountCard = async (array) => {
     <i class="material-icons add-icon">add</i>`;
 
   grid.append(totalBalanceCard); // Adds the Total Balance card at the beginning of the grid
+
 
   // Set up event listener for the "Total Balance" card
   totalBalanceCard.addEventListener("click", () => {
@@ -62,8 +64,6 @@ const createAccountCard = async (array) => {
 
     getAccountsByUserId(userId);
   });
-
-
 
   array.sort((a, b) => a.id - b.id);
 
@@ -105,7 +105,7 @@ const createAccountCard = async (array) => {
 
 
 
-// Fetch and create transaction rows
+// TRANSACTION ROWS //
 async function getAllTransactionsByAccountId(accountId) {
   const response = await fetch(`${baseUrl}/transactions/account/${accountId}`, {
     method: "GET",
@@ -127,11 +127,16 @@ async function getAllTransactionsByUserId(userId) {
 
 // Create transaction rows
 function createTransactionRows(data) {
-  const tbody = document.querySelector(".transaction-row");
+  const tbody = document.querySelector(".transactions-table-body");
   tbody.innerHTML = "";
+
+  data.sort((a, b) => new Date(b.date) - new Date(a.date));
 
   data.forEach((transaction) => {
     let transactionRow = document.createElement("tr");
+    let iconClass = "";
+
+
     transactionRow.innerHTML = `
       <td class="table-data">${transaction.transactionType}
         <p>${transaction.formattedDate} , ${transaction.formattedTime}</p>

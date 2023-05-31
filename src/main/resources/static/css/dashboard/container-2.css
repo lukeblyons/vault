@@ -103,6 +103,11 @@
     transition: border-color 0.3s ease-in-out;
 }
 
+.transaction-form-container form select:hover,
+.transaction-form-container form input:hover {
+    cursor: pointer;
+}
+
 input[type="text"], select {
     font-family: 'Electrolize', sans-serif;
     font-size: 16px;

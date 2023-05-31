@@ -170,3 +170,10 @@ function createTransactionRows(data) {
 
 // Initialize the page
 getAccountsByUserId(userId);
+
+// Log Out Button
+const logOut = document.querySelector(".log-out");
+
+logOut.addEventListener("click", function() {
+  window.location.href = "http://localhost:8080/landing.html";
+});

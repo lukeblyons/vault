@@ -29,7 +29,8 @@ const button = document.createElement('button');
 
 input.type = 'text';
 input.name = 'username';
-input.placeholder = "Friends' Username"
+input.placeholder = "Friends' Username";
+input.autocomplete = "off";
 button.type = 'submit';
 button.textContent = 'Add Friend';
 
@@ -79,16 +80,34 @@ function addFriendToTable(friend) {
 
 friendsTableBody.addEventListener('click', function(e) {
     if (e.target.classList.contains ('remove-friend-icon')) {
-        const username = e.target.dataset.username;  // get username from data attribute
+        const username = e.target.dataset.username;
         removeFriend(username);
-        e.target.parentNode.parentNode.remove();  // remove friend's row from table
+        e.target.parentNode.parentNode.remove();
     }
 });
 
 function removeFriend(username) {
     const index = friendsList.findIndex(friend => friend.fakeUsername === username);
     if (index > -1) {
-        friendsList.splice(index, 1);  // remove friend from array
-        localStorage.setItem(userId, JSON.stringify(friendsList));  // update localStorage
+        friendsList.splice(index, 1);
+        localStorage.setItem(userId, JSON.stringify(friendsList));
     }
+}
+
+function formatCardNumber(cardNumber) {
+    return cardNumber.replace(/(\d{4}(?=\d))/g, "$1 - ");
+}
+
+if (userId >= 1 && userId <= people.length) {
+    const currentUser = people[userId - 1];
+
+    const formattedCardNumber = formatCardNumber(currentUser.fakeCardNumber);
+    const creditCardNumberElement = document.querySelector('.container-4 .card-number');
+    creditCardNumberElement.textContent = formattedCardNumber;
+
+    const creditCardNameElement = document.querySelector('.container-4 .card-name');
+    creditCardNameElement.textContent = currentUser.fakeName;
+
+    const welcomeMessageElement = document.querySelector('#welcome');
+    welcomeMessageElement.textContent = 'Welcome, ' + currentUser.fakeName + '!';
 }

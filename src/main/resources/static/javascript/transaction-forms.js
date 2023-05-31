@@ -16,7 +16,7 @@ function displayForm(formId, labels, eventListenerFunction, formTitle, instructi
             if (formId !== 'transfer-form' && formId !== 'send-form') accountIdType = '-account-id';
             innerHTML += `
                 <label for="${formId}${accountIdType}">${label}</label>
-                <${inputType} id="${formId}${accountIdType}"></${inputType}>`;
+                <${inputType} id="${formId}${accountIdType}" autocomplete="off"></${inputType}>`;
         } else {
             innerHTML += `
                 <label for="${formId}-${label.toLowerCase().replace(' ', '-')}">${label}</label>

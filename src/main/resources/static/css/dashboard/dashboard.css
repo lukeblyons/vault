@@ -47,6 +47,10 @@ body {
   font-size: 30px;
 }
 
+#welcome {
+    margin-left: 550px;
+}
+
 .log-out {
   list-style: none;
   display: inline-block;
@@ -57,6 +61,11 @@ body {
 .log-out {
   text-decoration: none;
   padding: 5px 10px;
+}
+
+.log-out:hover {
+    transform: scale(1.1);
+    cursor: pointer;
 }
 
 /* ALL CONTAINERS */

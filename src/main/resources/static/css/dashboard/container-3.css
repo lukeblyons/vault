@@ -28,6 +28,7 @@
 .filter-container {
     display: flex;
     align-items: center;
+    margin-right: 20px;
 }
 
 .filter-text {
@@ -40,6 +41,10 @@
 .filter-list-icon {
     font-size: 24px;
     color: #6C757D;
+}
+
+.filter-list-icon:hover {
+    cursor: pointer;
 }
 
 
@@ -81,11 +86,10 @@ tr {
 
 tr:hover {
     background-color: #F0F8FF;
+    cursor: pointer;
 }
 
 td .material-symbols-sharp {
-
-
     font-size: 40px;
 }
 
@@ -117,7 +121,6 @@ p {
 }
 
 tr:hover p {
-
     color: #6C757D;
 }
 

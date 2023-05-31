@@ -65,6 +65,7 @@ input {
     border-radius: 5px;
     font-size: 1vmin;
     transition: border-color 0.3s ease-in-out;
+    cursor: pointer;
 }
 
 input[type="text"], select {
@@ -96,8 +97,13 @@ button:hover {
 /* FRIENDS TABLE */
 .friends-container {
     height: 45%;
-    padding-top: 10px;
+    width: 90%;
+    margin-left: 5%;
+    padding-top: 5px;
     overflow-y: auto;
+    background-color: white;
+    box-shadow: 1px 1px 3px  lightblue;
+    border-radius: 10px;
 }
 
 .remove-friend-icon {
@@ -154,6 +160,11 @@ button:hover {
 
 
 /* CREDIT CARD */
+#my-cards {
+    margin-top: 20px;
+    margin-bottom: -10px;
+}
+
 .container-4 .card {
     height: auto;
     width: 90%;

@@ -23,8 +23,14 @@
     </ul>
   </nav>
 </header>
-<main>
-  <!-- Main content goes here -->
+<main id="main-section">
+  <div id="content-wrapper">
+    <div id="lottie-wrapper">
+      <div class="overlay-text">Like having Fort Knox<br>in your pocket</div>
+      <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+      <lottie-player src="https://assets5.lottiefiles.com/packages/lf20_kK73MQ.json"  background="transparent"  speed=".5"  style="width: 110%; height: 100%;"  loop  autoplay></lottie-player>
+    </div>
+  </div>
 </main>
 <footer>
   <!-- Footer content goes here -->
@@ -34,73 +40,63 @@
 <!--Login / Register forms section-->
 <div id="modal" class="modal">
   <div class="modal-content">
-    <div class="container" id="container">
+    <div class="modal-overlay">
+      <div id="lottie-modal-container" class="modal-lottie-animation"></div>
+      <div id="lottie-modal-container-mirror" class="modal-lottie-animation-mirror"></div>
 
-      <!--Log in Form-->
-      <div class="form-container login-container">
-        <form id="login-form" action="#">
+      <div class="container" id="container">
+        <!-- Log in Form -->
+        <div class="form-container login-container">
+          <form id="login-form" action="#">
+            <h1 class="form-title">Log in</h1>
+            <label for="login-username"></label>
+            <input type="text" placeholder="Username" id="login-username" autocomplete="off"/>
+            <label for="login-password"></label>
+            <input type="password" placeholder="Password" id="login-password" autocomplete="off"/>
+            <button id="login-button" type="submit">Log in</button>
+          </form>
+        </div>
 
-          <h1 class="form-title">Log in</h1>
+        <!-- Register Form -->
+        <div class="form-container register-container">
+          <form id="register-form" action="#">
+            <h1 class="form-title">Create Account</h1>
+            <label for="register-first-name"></label>
+            <input type="text" placeholder="First Name" id="register-first-name" autocomplete="off"/>
+            <label for="register-last-name"></label>
+            <input type="text" placeholder="Last Name" id="register-last-name" autocomplete="off"/>
+            <label for="register-email"></label>
+            <input type="email" placeholder="Email" id="register-email" autocomplete="off"/>
+            <label for="register-username"></label>
+            <input type="text" placeholder="Username" id="register-username" autocomplete="off"/>
+            <label for="register-password"></label>
+            <input type="password" placeholder="Password" id="register-password" autocomplete="off"/>
+            <button id="register-button" type="submit">Register</button>
+          </form>
+        </div>
 
-          <label for="login-username"></label>
-          <input type="text" placeholder="Username" id="login-username" autocomplete="off"/>
+        <!-- Switch between Register and Login -->
+        <div class="overlay-container">
+          <div class="overlay">
+            <!-- Switch to Register form -->
+            <div class="overlay-panel overlay-right">
+              <h1 class="form-title">Don't have an account?</h1>
+              <button class="ghost" id="switch-to-register-button">Register</button>
+            </div>
 
-          <label for="login-password"></label>
-          <input type="password" placeholder="Password" id="login-password" autocomplete="off"/>
-
-          <button id="login-button" type="submit">Log in</button>
-        </form>
-      </div>
-
-      <!--Register Form-->
-      <div class="form-container register-container">
-        <form id="register-form" action="#">
-
-          <h1 class="form-title">Create Account</h1>
-
-          <label for="register-first-name"></label>
-          <input type="text" placeholder="First Name" id="register-first-name" autocomplete="off"/>
-
-          <label for="register-last-name"></label>
-          <input type="text" placeholder="Last Name" id="register-last-name" autocomplete="off"/>
-
-          <label for="register-email"></label>
-          <input type="email" placeholder="Email" id="register-email" autocomplete="off"/>
-
-          <label for="register-username"></label>
-          <input type="text" placeholder="Username" id="register-username" autocomplete="off"/>
-
-          <label for="register-password"></label>
-          <input type="password" placeholder="Password" id="register-password" autocomplete="off"/>
-
-          <button id="register-button" type="submit">Register</button>
-        </form>
-      </div>
-
-      <!--Switch between Register and Login-->
-      <div class="overlay-container">
-        <div class="overlay">
-
-          <!--Switch to Register form-->
-          <div class="overlay-panel overlay-right">
-            <h1 class="form-title">Don't have an account?</h1>
-            <button class="ghost" id="switch-to-register-button">Register</button>
+            <!-- Switch to Login form -->
+            <div class="overlay-panel overlay-left">
+              <h1 class="form-title">Already have an account?</h1>
+              <button class="ghost" id="switch-to-login-button">Log in</button>
+              <p id="registration-warning">Warning: Debit card will be issued upon account registration</p>
+            </div>
           </div>
-
-          <!--Switch to Login form-->
-          <div class="overlay-panel overlay-left">
-            <h1 class="form-title">Already have an account?</h1>
-            <button class="ghost" id="switch-to-login-button">Log in</button>
-            <p id="registration-warning">Warning: Debit card will be issued upon account registration</p>
-          </div>
-
         </div>
       </div>
-
-
     </div>
   </div>
 </div>
+
 
 
 

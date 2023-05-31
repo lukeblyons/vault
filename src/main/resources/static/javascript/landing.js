@@ -81,8 +81,23 @@ registerForm.addEventListener('submit', handleSubmit);
 
 
 // #3 - Modal  is hidden until clicked (Register and Login forms) //
+const mainSection = document.getElementById('main-section');
+
 navLoginSignup.addEventListener('click', () => {
   modal.style.display = 'block';
+  mainSection.style.display = 'none';  // Hide main section
+
+    // Add the Lottie player
+    document.getElementById('lottie-modal-container').innerHTML = `
+      <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+      <lottie-player src="https://assets6.lottiefiles.com/packages/lf20_duq85prc.json"  background="transparent"  speed=".5"  style="width: 100%; height: 100%;"  autoplay></lottie-player>
+    `;
+
+    const modalContainerMirror = document.getElementById('lottie-modal-container-mirror');
+    modalContainerMirror.innerHTML = `
+      <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+      <lottie-player src="https://assets6.lottiefiles.com/packages/lf20_duq85prc.json" background="transparent" speed=".5" style="width: 100%; height: 100%;" autoplay></lottie-player>
+      `;
 });
 
 document.addEventListener('click', (event) => {
@@ -92,6 +107,7 @@ document.addEventListener('click', (event) => {
 
   if (!isInsideContainer && !isNavLoginSignup && isModalVisible) {
     modal.style.display = 'none';
+    mainSection.style.display = 'block';  // Show main section
   }
 });
 
@@ -101,6 +117,9 @@ modalContent.addEventListener('click', (event) => {
 
 modal.addEventListener('click', () => {
   modal.style.display = 'none';
+  mainSection.style.display = 'block';  // Show main section
+
+  document.getElementById('lottie-modal-container').innerHTML = '';
 });
 
 

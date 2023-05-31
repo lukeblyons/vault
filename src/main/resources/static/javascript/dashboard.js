@@ -19,7 +19,6 @@ async function getAccountsByUserId(userId) {
   createAccountCard(data);
 }
 
-
 // ACCOUNT CARDS //
 const createAccountCard = async (array) => {
   const grid = document.querySelector('.container-1');
@@ -41,7 +40,6 @@ const createAccountCard = async (array) => {
     <i class="material-icons add-icon">add</i>`;
 
   grid.append(totalBalanceCard); // Adds the Total Balance card at the beginning of the grid
-
 
   // Set up event listener for the "Total Balance" card
   totalBalanceCard.addEventListener("click", () => {
@@ -88,11 +86,7 @@ const createAccountCard = async (array) => {
       const subtractIcon = accountCard.querySelector(".remove-icon");
       subtractIcon.addEventListener("click", async (event) => {
         event.stopPropagation();
-        const response = await fetch(`${baseUrl}/accounts/${obj.id}`, {
-          method: "DELETE",
-          headers: headers,
-        });
-        getAccountsByUserId(userId);
+        showDeleteConfirmation(obj);
       });
 
       // Fetch transactions for this account
@@ -102,8 +96,30 @@ const createAccountCard = async (array) => {
   });
 };
 
+// Function to show the delete confirmation pop-up
+function showDeleteConfirmation(account) {
+  // Display the confirmation pop-up to the user
+  const confirmBox = confirm(`Are you sure you want to delete the account named '${account.nickname}'?`);
+  if (confirmBox) {
+    deleteAccount(account.id);
+  }
+}
 
+// Function to delete the account
+async function deleteAccount(accountId) {
+  const response = await fetch(`${baseUrl}/accounts/${accountId}`, {
+    method: "DELETE",
+    headers: headers,
+  });
 
+  if (response.ok) {
+    // Account deleted successfully
+    getAccountsByUserId(userId);
+  } else {
+    // Handle error case
+    console.error("Failed to delete the account.");
+  }
+}
 
 // TRANSACTION ROWS //
 async function getAllTransactionsByAccountId(accountId) {
@@ -130,13 +146,12 @@ function createTransactionRows(data) {
   const tbody = document.querySelector(".transactions-table-body");
   tbody.innerHTML = "";
 
-  data.sort((a, b) => new Date(b.date) - new Date(a.date));
+  data.sort((a, b) => b.id - a.id);
 
   data.forEach((transaction) => {
     let transactionRow = document.createElement("tr");
+    transactionRow.setAttribute("id", transaction.id);
     let iconClass = "";
-
-
     transactionRow.innerHTML = `
       <td class="table-data">${transaction.transactionType}
         <p>${transaction.formattedDate} , ${transaction.formattedTime}</p>
@@ -155,7 +170,3 @@ function createTransactionRows(data) {
 
 // Initialize the page
 getAccountsByUserId(userId);
-
-
-
-

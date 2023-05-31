@@ -50,7 +50,8 @@
     margin-left: 15px;
     margin-bottom: 20px;
     border-radius: 10px;
-
+    overflow: auto;
+    height: calc(100% - 20px);
 }
 
 
@@ -63,6 +64,8 @@
 .transactions-table-body {
     padding: 50px;
     margin-left: 70px;
+    overflow: scroll;
+    max-height: calc(100% - 120px);
 }
 
 
@@ -81,19 +84,30 @@ tr:hover {
 }
 
 td .material-symbols-sharp {
-    vertical-align: middle;
-    padding: 20px;
+
+
     font-size: 40px;
 }
 
 .table-data {
     padding: 20px;
     font-size: 2vmin;
-    white-space: nowrap; /* Prevent text wrapping */
-    overflow: hidden; /* Hide overflowing content */
+    white-space: nowrap;
+    overflow: hidden;
     text-overflow: ellipsis;
-      display: flex; /* Add this line */
-      align-items: center;
+    text-align: left;
+}
+
+.table-data:first-child {
+  width: 40%;
+}
+
+.table-data:nth-child(2) {
+  width: 20%;
+}
+
+.table-data:last-child {
+  width: 30%;
 }
 
 p {
@@ -103,6 +117,25 @@ p {
 }
 
 tr:hover p {
-    transition: color 0.5s ease-in-out;
+
     color: #6C757D;
+}
+
+/* Scrollbar Styles */
+.container-3::-webkit-scrollbar {
+  width: 5px;
+  height: 30px;
+}
+
+.container-3::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.container-3::-webkit-scrollbar-thumb {
+  background-color: #F0F8FF;
+  border-radius: 5px;
+}
+
+.container-3::-webkit-scrollbar-thumb:hover {
+  background-color: #F0F8FF;
 }

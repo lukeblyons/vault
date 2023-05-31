@@ -109,7 +109,7 @@ public class TransactionServiceImpl implements TransactionService {
                 if ("Transfer to".equalsIgnoreCase(transactionDTO.getTransactionType())) {
                     transaction.setTransactionType("Transferred to " + toAccount.getNickname());
                 } else if ("Send to".equalsIgnoreCase(transactionDTO.getTransactionType())) {
-                    transaction.setTransactionType("Sent to " + toAccount.getUser().getFirstName() + " " + fromAccount.getUser().getLastName());
+                    transaction.setTransactionType("Sent to " + toAccount.getUser().getFirstName() + " " + toAccount.getUser().getLastName());
                 }
 
                 transactionRepository.saveAndFlush(toTransaction);

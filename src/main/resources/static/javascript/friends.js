@@ -58,24 +58,31 @@ form.addEventListener('submit', function(e) {
 });
 
 function addFriendToTable(friend) {
-    const row = document.createElement('tr');
-    const nameTd = document.createElement('td');
-    nameTd.textContent = friend.fakeName;
-    const accountIdTd = document.createElement('td');
-    accountIdTd.textContent = friend.fakeAccountId;
+  const row = document.createElement('tr');
+  const nameTd = document.createElement('td');
 
-    // create remove icon
-    const removeTd = document.createElement('td');
-    const removeIcon = document.createElement('i');
-    removeIcon.textContent = 'remove';
-    removeIcon.className = 'material-icons remove-friend-icon';
-    removeIcon.dataset.username = friend.fakeUsername;
-    removeTd.appendChild(removeIcon);
+  // Extract the first part and the first letter of the second part of the name
+  const nameParts = friend.fakeName.split(' ');
+  const firstName = nameParts[0];
+  const lastNameInitial = nameParts.length > 1 ? nameParts[1][0] : '';
+  const formattedName = `${firstName} ${lastNameInitial}.`;
 
-    row.appendChild(nameTd);
-    row.appendChild(accountIdTd);
-    row.appendChild(removeTd);
-    friendsTableBody.appendChild(row);
+  nameTd.textContent = formattedName;
+  const accountIdTd = document.createElement('td');
+  accountIdTd.textContent = friend.fakeAccountId;
+
+  // create remove icon
+  const removeTd = document.createElement('td');
+  const removeIcon = document.createElement('i');
+  removeIcon.textContent = 'remove';
+  removeIcon.className = 'material-icons remove-friend-icon';
+  removeIcon.dataset.username = friend.fakeUsername;
+  removeTd.appendChild(removeIcon);
+
+  row.appendChild(nameTd);
+  row.appendChild(accountIdTd);
+  row.appendChild(removeTd);
+  friendsTableBody.appendChild(row);
 }
 
 friendsTableBody.addEventListener('click', function(e) {

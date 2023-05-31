@@ -60,7 +60,6 @@
 .transaction-forms-container{
     margin-top: 1vmin;
     flex-direction: column;
-
 }
 
 .transaction-form-container {
@@ -71,7 +70,6 @@
 }
 
 /* STYLES FOR THE FORMS */
-
 .transaction-form-container form {
     width: 100%;
     display: flex;
